@@ -5,9 +5,9 @@
 
 Simple board game. 
 
-* <h3> [View Demo](https://niebert.github.io/bubblebreaker) </h3>
+### [View Demo](https://niebert.github.io/bubblebreaker) 
 
-This is just a plain fork of [bobak7/bubblebreaker](https://github.com/bobak7/bubblebreaker). This fork just added a webview of the demo so that learners can view the webapp and then look into mathematical principles of rewards points and its encouraging drivers for the game. See [Wikiverity AppLSAC]()
+This is just a plain fork of [bobak7/bubblebreaker](https://github.com/bobak7/bubblebreaker). This fork just added a webview of the demo so that learners can view the webapp and then look into mathematical principles of rewards points and its encouraging drivers for the game. See [Wikiverity AppLSAC](https://en.m.wikiversity.org/wiki/WebApps_with_LocalStorage_and_AppCache/Privacy#Implementation_Example)
 
 
 ## Game rules
