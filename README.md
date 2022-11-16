@@ -3,7 +3,9 @@
 # Bubble Breaker
 ### Version 0.8
 
-Simple board game.
+Simple board game. [View Demo](https://niebert.gihub.io/bubblebreaker)
+
+This is just a plain fork of [bobak7/bubblebreaker](https://github.com/bobak7/bubblebreaker). This fork just added a webview of the demo so that learners can view the webapp and then look into mathematical principles of rewards points and its encouraging drivers for the game. See [Wikiverity AppLSAC]()
 
 
 ## Game rules
