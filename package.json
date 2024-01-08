@@ -1,0 +1,13 @@
+{
+    "version": "1.0.8",
+    "name": "bubblebreaker4js",
+    "app-name": "bubblebreaker4js",
+    "date4build": "2023-12-15";
+    "description": "AppLSAC BubbleBreaker",
+    "main": "main.js",
+    "author": "bobak7 niebert",
+    "license": "ISC",
+    "dependencies": {
+    },
+    
+}
