@@ -1,0 +1,6 @@
+#board {
+    /* background: hsl(300, 100%, 90%); */
+    background: hsl(240, 4.5%, 90%);
+    /* border: 1px solid hsl(300, 100%, 50%);*/
+    border: 1px solid hsl(240, 100%, 50%);
+}

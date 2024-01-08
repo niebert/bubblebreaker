@@ -8,13 +8,24 @@ header, #board, #highScores, #options, footer {
 }
 
 header {
-    background: hsl(180, 100%, 80%);
+    /* background: hsl(180, 100%, 80%); */
     border: 1px solid hsl(180, 100%, 45%);
 }
 
+#header {
+    background:  #E4B363;
+    border: 1px solid hsl(180, 100%, 45%);
+    padding-top: 5px;
+    padding-bottom: 15px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
 #board {
-    background: hsl(300, 100%, 90%);
-    border: 1px solid hsl(300, 100%, 50%);
+    /* background: hsl(300, 100%, 90%); */
+    background: hsl(240, 4.5%, 90%);
+    /* border: 1px solid hsl(300, 100%, 50%);*/
+    border: 1px solid hsl(240, 100%, 50%);
 }
 
 #highScores {
@@ -30,6 +41,15 @@ header {
 footer {
     background: hsl(0, 100%, 70%);
     border: 1px solid hsl(0, 100%, 50%);
+}
+
+#footerbuttons {
+    background: hsl(0, 100%, 70%);
+    border: 1px solid hsl(0, 100%, 50%);
+}
+#footer {
+  background: #E4B363;
+  border: 1px solid hsl(0, 100%, 50%);
 }
 
 footer > small {
@@ -60,13 +80,14 @@ h1 {
 }
 
 #score {
-    font-weight: bold;
+    /* font-weight: bold; */
+    font-weight: normal;
     display: inline;
 }
 
 #score::before {
-    content: 'score: ';
-    font-weight: normal;
+    /* content: 'Score: '; */
+    font-weight: bold;
 }
 
 #board {
@@ -84,6 +105,11 @@ h3 {
 #highScores {
     grid-area: score;
     margin-bottom: 0.5em;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 th {
@@ -129,4 +155,13 @@ td {
 footer {
     grid-area: foot;
     margin-top: 0.5em;
+}
+#footerbuttons {
+    background:white;
+}
+
+canvas {
+    padding: 0;
+    margin: auto;
+    display: block;
 }
