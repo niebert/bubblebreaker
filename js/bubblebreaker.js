@@ -1,30 +1,49 @@
-function BubbleBreaker (canvas, scoreBoard) {
-    
+
+function BubbleBreaker (canvas, scoreInfo, scoreSelect ) {
+
  /*
  ******************************************************************************
 
     default config
 
  ******************************************************************************
-*/   
- 
-    this.playerName = '';    
+*/
+    options = options || {};
+    if (!canvas) {
+      console.error("js/bubblebreaker.js:12 - Canvas does not exist!")
+    } else {
+      //canvas.width  = 200; // in pixels
+      //canvas.height = 100;
+      this.canvas = canvas;
+      console.log("js/bubblebreaker.js:17 - Canvas exists  width=" + this.canvas.width + " height="+this.canvas.height+"!")
+      //alert("js/bubblebreaker.js:18 - Canvas exists  width=" + this.canvas.width + " height="+this.canvas.height+"!")
+    }
+    this.playerName = '';
     this.score = 0;
-    this.scoreBoard = scoreBoard;
+    this.scoreInfo = scoreInfo;
+    this.scoreSelect = scoreSelect;
     this.difficulty = 5;
-    this.columns = 12;
-    this.rows = 12;
-    this.ctx = canvas.getContext('2d');
+    this.columns = 240;
+    this.rows = 50;
+    this.margin = 0; // board margin right in pixels e.g. 5px
+    this.ctx = this.canvas.getContext('2d');
     this.theme = {
         bubbles: ['red', 'yellow', 'lime', 'cyan', 'blue', 'magenta'],
-        background: 'lavender',
+        //background: 'lavender',
+        background: '#CACACA',
         highlight: 'rgba(0, 0, 0, 0.2)',
         cell: {
             size: 36,
             padding: 2,
         }
     };
-    
+    // Points for Selection
+    this.score4selection = 0;
+    this.gamestatus = {
+      "gameOver": false,
+      "bonus": 0
+    }
+
 /*
  ******************************************************************************
 
@@ -32,17 +51,17 @@ function BubbleBreaker (canvas, scoreBoard) {
 
  ******************************************************************************
 */
-    
+
     this.bubbles = new BubbleStorage();
-    
+
     this.selection = new BubbleStorage();
-    
+
     this.drawSelectedBackground = function () {
         var bubble = null;
         var x = 0;
         var y = 0;
         var i = 0;
-        var bubbleArray = this.selection.getAll();
+        var bubbleArray = this.selection.getAll("Selection");
         this.ctx.fillStyle = this.theme.highlight;
         for (i = 0; i < bubbleArray.length; i++) {
             this.ctx.fillRect(
@@ -53,7 +72,7 @@ function BubbleBreaker (canvas, scoreBoard) {
             );
         }
     };
-    
+
     this.drawBubble = function (bubble) {
         var x = bubble.x + this.theme.cell.size / 2;
         var y = bubble.y + this.theme.cell.size / 2;
@@ -70,36 +89,92 @@ function BubbleBreaker (canvas, scoreBoard) {
         this.ctx.fillStyle.addColorStop(0.75, 'black');
         this.ctx.fill();
     };
-    
+
     this.draw = function () {
         var i = 0;
         var bubbleArray = null;
-        
+
         // draw background
         this.ctx.fillStyle = this.theme.background;
+        //this.ctx.fillStyle = "#C0C0C0";
         this.ctx.fillRect(
             0,
             0,
             this.columns * this.theme.cell.size,
             this.rows * this.theme.cell.size
         );
-        
+        //alert("js/BubbleBreaker.js:92 - theme.background="+this.theme.background);
+        console.log("js/BubbleBreaker.js:92 - theme.background="+this.theme.background);
+
         // draw all bubbles
         bubbleArray = this.bubbles.getAll();
+        //alert("bubbleArray.length="+bubbleArray.length+" bubbleArray="+jst(bubbleArray));
         for (i = 0; i < bubbleArray.length; i++) {
             this.drawBubble(bubbleArray[i]);
         }
-        
+
         // highlight selected positions
         this.drawSelectedBackground();
-        
-        this.scoreBoard.innerHTML = this.score;
+
+        this.scoreInfo.innerHTML = this.score;
     };
-    
+
+    function getBoardSize() {
+      var w = window.innerWidth || 500;
+      var h = window.innerHeight || 500;
+      if (window) {
+        var headerDOM = document.getElementById("header");
+        if (headerDOM) {
+          console.log("header.offsetHeight="+headerDOM.offsetHeight);
+          h = h - header.offsetHeight;
+        }
+        var footerDOM = document.getElementById("footer");
+        if (headerDOM) {
+          console.log("footer.offsetHeight="+footerDOM.offsetHeight);
+          //alert("footer.offsetHeight="+footerDOM.offsetHeight);
+          h = h - footerDOM.offsetHeight;
+        }
+      } else {
+        alert("window is not defined")
+      }
+      return {
+        "width": w,
+        "height": h
+      }
+    }
+
+    this.calcGridSize = function () {
+        var cellSize = this.theme.cell.size;
+        var size = {
+          "columns": this.columns,
+          "rows": this.rows
+        }
+        var bs = getBoardSize();
+        if (window) {
+          size.rows    = Math.floor(bs.height/cellSize);
+          size.columns = Math.floor(bs.width/cellSize) - 2;
+          //alert("bubblebreaker.js:118 - rows="+size.rows+" ("+h+"px) cols="+size.columns+" ("+w+"px)");
+          console.log("bubblebreaker.js:118 - rows="+size.rows+" ("+bs.height+"px) cols="+size.columns+" ("+bs.width+"px)");
+          this.columns = size.columns;
+          this.rows = size.rows;
+        }
+        return size
+    }
+
     this.newGame = function() {
+        var size = this.calcGridSize();
         var pos = {x: 0, y: 0};
-        var width = this.columns * this.theme.cell.size;
-        var height = this.rows * this.theme.cell.size;
+        var width = size.columns * this.theme.cell.size;
+        var height = size.rows   * this.theme.cell.size;
+        //alert("js/bubblebreaker:js:133 - width["+size.columns+"]="+width+" height["+size.rows+"]="+height);
+        console.log("js/bubblebreaker:js:133 - width["+size.columns+"]="+width+" height["+size.rows+"]="+height);
+        //var width = this.columns * this.theme.cell.size;
+        //var height = this.rows * this.theme.cell.size;
+        //width = this.columns * this.theme.cell.size;
+        //height = this.rows * this.theme.cell.size;
+        canvas.width = width + this.margin;
+        canvas.height = height + this.margin;
+
         this.score = 0;
         this.selection.clear();
         this.bubbles.clear();
@@ -111,12 +186,14 @@ function BubbleBreaker (canvas, scoreBoard) {
                     color: this.theme.bubbles[
                         Math.floor(Math.random() * this.difficulty)
                     ]
+                    // random number is between 0 and 1
+                    // diificulty sets the number of different colors
                 });
             }
         }
         this.draw();
     };
-    
+
     this.checkGameOver = function () {
         var result = {gameOver: false, bonus: 0};
         var bubbles = this.bubbles.getAll();
@@ -142,7 +219,7 @@ function BubbleBreaker (canvas, scoreBoard) {
         this.score += result.bonus;
         return result;
     };
-    
+
     this.alignBubbles = function () {
         var bubble = null;
         var pos = {x: 0, y: 0};
@@ -153,7 +230,7 @@ function BubbleBreaker (canvas, scoreBoard) {
             move.y = 0;
             for (pos.y = (this.rows - 1) * cellSize; pos.y >= -0;
                     pos.y -= cellSize) {
-                bubble = this.bubbles.getBubble(pos);                
+                bubble = this.bubbles.getBubble(pos);
                 if (bubble) {
                     if (move.x || move.y) {
                         this.bubbles.remove(bubble);
@@ -170,9 +247,10 @@ function BubbleBreaker (canvas, scoreBoard) {
             }
         }
     };
-    
+
     this.breakSelection = function () {
-        var bubbles = this.selection.getAll();
+        var bubbles = this.selection.getAll("Selection");
+        //alert("Selection.bubbles="+jst(bubbles));
         var selectionSize = this.selection.size();
         var i = 0;
         for (i = 0; i < selectionSize; i++) {
@@ -183,7 +261,7 @@ function BubbleBreaker (canvas, scoreBoard) {
         this.alignBubbles();
         return this.checkGameOver();
     };
-    
+
     this.select = function (pos) {
         var bubble = null;
         var adjacentPos = [
@@ -203,34 +281,60 @@ function BubbleBreaker (canvas, scoreBoard) {
             }
         }
     };
-    
+
+    this.setPoints4Selection = function (pString) {
+      var selectionSize = this.selection.size();
+      var s4s = selectionSize * (selectionSize - 1);
+      this.score4selection = "";
+      if (pString) {
+        this.scoreSelect.innerHTML = pString
+      } else {
+        if (s4s > 0) {
+          this.scoreSelect.innerHTML = "[+"+s4s+"]";
+          //this.scoreSelect.innerHTML = "Points "+s4s;
+        } else {
+          this.scoreSelect.innerHTML = "";
+        }
+      }
+      console.log("set scoreSelect='"+this.scoreSelect.innerHTML+"'");
+    }
+
     this.bubbleClick = function(pos) {
         var result = {gameOver: false, bonus: 0};
+        this.setPoints4Selection();
         // click on an already selected bubble
         if (this.selection.contains(pos)) {
             result = this.breakSelection();
+            this.setPoints4Selection(" ");
         } else { // click on bubble which is not selected
             // cancel current selection and select new bubble(s)
             this.selection.clear();
+            this.setPoints4Selection(" ");
             this.select(pos);
             // single bubble can not be selected
             if (this.selection.size() < 2) {
                 this.selection.clear();
+            } else {
+              this.setPoints4Selection();
             }
         }
         return result;
     };
-    
+
     this.handleClick = function (pos) {
         var result = {gameOver: false, bonus: 0};
         // round coordinates
+        var oldx = pos.x;
+        var oldy = pos.y;
         pos.x = Math.floor(pos.x / this.theme.cell.size);
         pos.x = Math.max(0, Math.min(this.columns - 1, pos.x));
         pos.x *= this.theme.cell.size;
         pos.y = Math.floor(pos.y / this.theme.cell.size);
         pos.y = Math.max(0, Math.min(this.rows - 1, pos.y));
         pos.y *= this.theme.cell.size;
-        // a bubble has been clicked
+        //alert("bubblebreaker.js:275 - pos.x="+pos.x+" (oldx="+oldx+") pox.y="+pos.y+" (oldy="+oldy+")");
+        console.log("bubblebreaker.js:275 - pos.x="+pos.x+" (oldx="+oldx+") pox.y="+pos.y+" (oldy="+oldy+")");
+      // a bubble has been clicked
         if (this.bubbles.contains(pos)) {
             result = this.bubbleClick(pos);
         } else { // click did not hit any bubble
@@ -239,5 +343,5 @@ function BubbleBreaker (canvas, scoreBoard) {
         this.draw();
         return result;
     };
-    
+
 }
