@@ -1,13 +1,20 @@
 
 
 # Bubble Breaker
-### Version 0.8
+### Version 1.0.8
 
 Simple board game. 
 
 ### [View Demo](https://niebert.github.io/bubblebreaker) 
 
-This is just a plain fork of [bobak7/bubblebreaker](https://github.com/bobak7/bubblebreaker). This fork just added a webview of the demo so that learners can view the webapp and then look into mathematical principles of rewards points and its encouraging drivers for the game. See [Wikiverity AppLSAC](https://en.m.wikiversity.org/wiki/WebApps_with_LocalStorage_and_AppCache/Privacy#Implementation_Example)
+### [View Demo Hamburger Menu](https://niebert.github.io/bubblebreaker/bubblebreaker4menu.html) 
+
+This is fork of [bobak7/bubblebreaker](https://github.com/bobak7/bubblebreaker). This fork 
+* added a webview of the demo so that learners can view the webapp and then look into mathematical principles of rewards points and its encouraging drivers for the game.
+* added score for selected bubbles, so that user could see the points earned for a selection
+* [Hamburger Menu version of bubbilebreaker](https://niebert.github.io/bubblebreaker/bubblebreaker4menu.html) was added, that uses the same libraries of `bobak7`
+  
+See [Wikiverity AppLSAC](https://en.m.wikiversity.org/wiki/WebApps_with_LocalStorage_and_AppCache/Privacy#Implementation_Example)
 
 
 ## Game rules
