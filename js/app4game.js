@@ -52,25 +52,28 @@ function createCanvas4Board(pID) {
   return canvas4div;
 }
 
-function initGame() {
+function initGame(options) {
+  options = options || {};
   canvas = document.getElementById('board');
   playerNameElement = document.getElementById('playerName');
   difficultyElement = document.getElementById('difficulty');
   scoreInfo = document.getElementById('score');
   scoreSelect = document.getElementById('score4selection');
-  //assignEventListener();
+
   if (!canvas) {
-    console.error("canvas does not exist");
+    console.error("js/app4game.js:71 - canvas does not exist");
     canvas = createCanvas4Board('boarddiv');
   } else {
     if (canvas.width) {
-      console.log("js/bubblebreaker.js:47 - Canvas exists  width=" + canvas.width + " height="+canvas.height+"!")
+      console.log("js/app4game.js:75 - Canvas exists  width=" + canvas.width + " height="+canvas.height+"!")
     } else {
       canvas = createCanvas4Board('boarddiv');
     }
     //alert("js/bubblebreaker.js:42 - Canvas exists  width=" + canvas.width + " height="+canvas.height+"!")
   }
-  game = new BubbleBreaker(canvas, scoreInfo, scoreSelect);
+
+  game = new BubbleBreaker(canvas, scoreInfo, scoreSelect, options);
+
   highScores = new HighScores('score', 5);
   // override default settings
   if (localStorageAvailable()) {
@@ -119,29 +122,104 @@ function initGame() {
                     localStorage.playerName = playerNameElement.value;
                 }
               }
-              highScores.consider(
-                  {score: game.score, playerName: game.playerName}
-              );
-              if (localStorageAvailable()) {
-                  localStorage.highScores = highScores.save();
-              }
+          }
+          if (game.score > 0) {
+            highScores.consider(
+                {score: game.score, playerName: game.playerName}
+            );
+            if (localStorageAvailable()) {
+                localStorage.highScores = highScores.save();
+            }
           }
       }
   );
 
+var btnlist = ["board","options","highScores"];
+
+function hideAllButtons() {
+  hide('button4new');
+  hide('button4board');
+  hide('button4options');
+  hide('button4highScores');
+}
+
+
+function showAllButtons(pID) {
+  console.log("showAllButtons('"+pID+"')");
+  show('button4new');
+  show('button4board');
+  show('button4options');
+  show('button4highScores');
+  if (pID) {
+    var found = btnlist.indexOf(pID);
+    if (found >= 0) {
+      hide('buttons4'+pID);
+    }
+  }
+}
+
+function hideAllPages(pID) {
+  console.log("hideAllPages('"+pID+"')");
+  hide('board');
+  hide('options');
+  hide('highScores');
+  if (pID) {
+    show_all_buttons(pID);
+  } else {
+    show_all_buttons();
+  }
+
+}
+
+
+function showAllPages(pID) {
+  console.log("showAllPages('"+pID+"')");
+  show('board');
+  show('options');
+  show('highScores');
+  if (pID) {
+    hide(pID);
+  } else {
+    show_all_buttons();
+  }
+
+}
+
+function showPage4Game(pID) {
+  console.log("app4game.js:187 - showPage('"+pID+"')");
+  hideAllPages(pID);
+  showAllButtons(pID);
+  if (pID && (pID !== "board")) {
+    //hide("button4new");
+  }
+}
+
+function showNewGame(event) {
+    game.newGame();
+    show('board');
+    show('button4new');
+    hide('options');
+    hide('highScores');
+}
+
+function showNewGame4Menu(event) {
+    game.newGame();
+    app.nav.page('play');
+}
 
   // click on new game
 
-  document.getElementById('newGame').addEventListener('click',
-      function (event) {
-          game.newGame();
-          show('board');
-          hide('options');
-          hide('highScores');
-      }
-  );
+//  document.getElementById('newGame').addEventListener('click',showNewGame);
+//  document.getElementById('button4new').addEventListener('click',showNewGame);
 
+document.getElementById('button4clear').addEventListener('click',function (event) {
+  highScores.initChart();
+  if (localStorageAvailable()) {
+      localStorage.highScores = highScores.save();
+  }
+  highScores.draw();
 
+});
   // change player name
 
   playerNameElement.addEventListener('change',

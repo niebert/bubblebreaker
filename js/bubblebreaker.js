@@ -1,5 +1,5 @@
 
-function BubbleBreaker (canvas, scoreInfo, scoreSelect ) {
+function BubbleBreaker (canvas, scoreInfo, scoreSelect , options ) {
 
  /*
  ******************************************************************************
@@ -37,6 +37,8 @@ function BubbleBreaker (canvas, scoreInfo, scoreSelect ) {
             padding: 2,
         }
     };
+    this.boardMarginTop  = options.boardMarginTop || 100;
+    this.boardMarginBottom = options.boardMarginBottom || 80;
     // Points for Selection
     this.score4selection = 0;
     this.gamestatus = {
@@ -55,6 +57,36 @@ function BubbleBreaker (canvas, scoreInfo, scoreSelect ) {
     this.bubbles = new BubbleStorage();
 
     this.selection = new BubbleStorage();
+
+    this.getBoardSize = function () {
+        console.log("js/bubblebreaker.js:123 - CALL: getBoardSize()");
+        var w =  640;
+        var h =  480;
+        if (window) {
+          w = window.innerWidth;
+          h = window.innerHeight;
+          console.log("js/bubblebreaker.js:131 - CALL: getBoardSize() w="+w+" h="+h);
+          if (this.boardMarginTop) {
+            h = h - this.boardMarginTop;
+            console.log("js/bubblebreaker.js:135 -window.innerWidth="+window.innerWidth+" this.boardMarginTop="+this.boardMarginTop+" h="+h);
+          } else {
+            console.error("this.boardMarginTop does not exist - pass as  parameter 'options.boardMarginTop' to BubbleBreaker class");
+          }
+          if (this.boardMarginBottom) {
+            //alert("footer.offsetHeight="+footerDOM.offsetHeight);
+            h = h - this.boardMarginBottom;
+            console.log("js/bubblebreaker.js:138 -window.innerWidth="+window.innerWidth+" this.boardMarginBottom="+this.boardMarginBottom+" h="+h);
+          } else {
+           console.error("this.boardMarginBottom does not exist - pass as parameter 'options.boardMarginBottom' to BubbleBreaker class");
+         }
+       } else {
+          alert("window is not defined")
+      }
+      return {
+          "width": w,
+          "height": h
+        }
+    }
 
     this.drawSelectedBackground = function () {
         var bubble = null;
@@ -119,45 +151,20 @@ function BubbleBreaker (canvas, scoreInfo, scoreSelect ) {
         this.scoreInfo.innerHTML = this.score;
     };
 
-    function getBoardSize() {
-      var w = window.innerWidth || 500;
-      var h = window.innerHeight || 500;
-      if (window) {
-        var headerDOM = document.getElementById("header");
-        if (headerDOM) {
-          console.log("header.offsetHeight="+headerDOM.offsetHeight);
-          h = h - header.offsetHeight;
-        }
-        var footerDOM = document.getElementById("footer");
-        if (headerDOM) {
-          console.log("footer.offsetHeight="+footerDOM.offsetHeight);
-          //alert("footer.offsetHeight="+footerDOM.offsetHeight);
-          h = h - footerDOM.offsetHeight;
-        }
-      } else {
-        alert("window is not defined")
-      }
-      return {
-        "width": w,
-        "height": h
-      }
-    }
-
     this.calcGridSize = function () {
         var cellSize = this.theme.cell.size;
         var size = {
           "columns": this.columns,
           "rows": this.rows
         }
-        var bs = getBoardSize();
-        if (window) {
-          size.rows    = Math.floor(bs.height/cellSize);
-          size.columns = Math.floor(bs.width/cellSize) - 2;
-          //alert("bubblebreaker.js:118 - rows="+size.rows+" ("+h+"px) cols="+size.columns+" ("+w+"px)");
-          console.log("bubblebreaker.js:118 - rows="+size.rows+" ("+bs.height+"px) cols="+size.columns+" ("+bs.width+"px)");
-          this.columns = size.columns;
-          this.rows = size.rows;
-        }
+        var bs = this.getBoardSize();
+        size.rows    = Math.floor(bs.height/cellSize);
+        size.columns = Math.floor(bs.width/cellSize) - 2;
+        //alert("bubblebreaker.js:118 - rows="+size.rows+" ("+h+"px) cols="+size.columns+" ("+w+"px)");
+        console.log("bubblebreaker.js:118 - rows="+size.rows+" ("+bs.height+"px) cols="+size.columns+" ("+bs.width+"px)");
+        this.columns = size.columns;
+        this.rows = size.rows;
+
         return size
     }
 
