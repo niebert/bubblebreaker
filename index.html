@@ -34,11 +34,31 @@
           console.error("DOM Node ["+pID+"] does not exist.");
         }
       }
+      function showNewGame4Menu(event) {
+          game.newGame();
+          app.nav.page('play');
+      }
+
+      function showPage4Game(pID) {
+        console.log("index.html:43 - showPage('"+pID+"')");
+        hide("board");
+        hide("options");
+        hide("highScores");
+        if (pID) {
+          show(pID);
+          if (pID !== "board") {
+            hide("button4new");
+          } else {
+            show("button4new");
+          }
+        }
+      }
+
 
     </script>
 </head>
 
-<body onload="initGame()">
+<body>
 
 <section id='mainSection'>
 
@@ -49,10 +69,11 @@
       </h1>
       <h3>
          Score: <span id='score'></span> &nbsp;
-         <span id='score4selection'></span>
-         <button onclick="show('board');hide('options');hide('highScores');return false">Board</button>
-         <button onclick="hide('board');hide('options');show('highScores');return false">Highscore</button>
-         <button onclick="hide('board');show('options');hide('highScores');return false">Options</button>
+         <span  id='score4selection'></span>
+         <button id="button4new">New</button>
+         <button id="button4board"      Xstyle="display:none">Board</button>
+         <button id="button4highScores">Highscore</button>
+         <button id="button4options">Options</button>
       </h3>
   </header>
 
@@ -62,7 +83,8 @@
 
     <section id='highScores' style="display:none;width=100%">
         <h3>High scores</h3>
-        <table>
+
+        <table width="100%">
             <tr>
                 <th class='scoreColumn'>Score</th>
                 <th class='nameColumn'>Player name</th>
@@ -73,6 +95,9 @@
             <tr id='score3'><td></td><td id='name3'></td></tr>
             <tr id='score4'><td></td><td id='name4'></td></tr>
         </table>
+
+        <button id="button4clear" type="button" name="button">Clear Highscore</button>
+
     </section>
 
     <section id='options' style="display:none;width=100%">
@@ -89,7 +114,7 @@
             <option value='6'>hard</option>
         </select>
     </section>
-      <footer  id="footer">
+      <footer  id="footer" style="width:100%">
         <small id="footerbuttons">
         &nbsp;  <a href="https://github.com/niebert/bubblebreaker" target="_blank">GitHub-Repository</a>
         &nbsp;  <a href="bubblebreaker4menu.html" target="_blank">BubbleBreaker4Menu</a>
@@ -104,6 +129,45 @@
 <script src='js/bubblebreaker.js'></script>
 <script src='js/highscores.js'></script>
 <script src='js/app4game.js'></script>
+
+<script type="text/javascript">
+  var options = {
+    "boardMarginTop": el("header").offsetHeight,
+    "boardMarginBottom":  el("footer").offsetHeight
+  }
+   initGame(options);
+
+
+
+  document.getElementById('newGame').addEventListener('click',function (event) {
+      game.newGame();
+      showPage4Game('board');
+  });
+  document.getElementById('button4new').addEventListener('click',function (event) {
+      game.newGame();
+      showPage4Game('board');
+  });
+
+  document.getElementById('button4board').addEventListener('click',function (event) {
+    show('board');
+    show('button4new');
+    hide('highScores')
+    hide('options')
+  });
+  document.getElementById('button4options').addEventListener('click',function (event) {
+    hide('board');
+    show('button4new');
+    hide('highScores')
+    show('options')
+  });
+  document.getElementById('button4highScores').addEventListener('click',function (event) {
+    hide('board');
+    show('button4new');
+    show('highScores')
+    hide('options')
+  });
+
+</script>
 
 </body>
 
