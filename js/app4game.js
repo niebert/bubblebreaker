@@ -122,14 +122,14 @@ function initGame(options) {
                     localStorage.playerName = playerNameElement.value;
                 }
               }
-          }
-          if (game.score > 0) {
-            highScores.consider(
-                {score: game.score, playerName: game.playerName}
-            );
-            if (localStorageAvailable()) {
-                localStorage.highScores = highScores.save();
-            }
+              highScores.consider(
+                  {score: game.score, playerName: game.playerName}
+              );
+              if (game.score > 0) {
+                if (localStorageAvailable()) {
+                    localStorage.highScores = highScores.save();
+                }
+              }
           }
       }
   );
