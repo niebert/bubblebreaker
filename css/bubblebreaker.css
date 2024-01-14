@@ -5,16 +5,17 @@ body {
 
 header, #board, #highScores, #options, footer {
     padding: 0.5em;
+    /* width:100%; */
 }
 
 header {
     /* background: hsl(180, 100%, 80%); */
-    border: 1px solid hsl(180, 100%, 45%);
+    border: 1px #472a07;
 }
 
 #header {
     background:  #E4B363;
-    border: 1px solid hsl(180, 100%, 45%);
+    border: 1px solid #472a07;
     padding-top: 5px;
     padding-bottom: 15px;
     padding-left: 3px;
@@ -25,31 +26,40 @@ header {
     /* background: hsl(300, 100%, 90%); */
     background: hsl(240, 4.5%, 90%);
     /* border: 1px solid hsl(300, 100%, 50%);*/
-    border: 1px solid hsl(240, 100%, 50%);
+    border: 1px solid #472a07;
 }
 
 #highScores {
-    background: hsl(60, 100%, 70%);
-    border: 1px solid hsl(60, 100%, 45%);
+    background: #E4B363;
+    border: 1px solid #472a07;
+    min-width: 490px;
+    align:center;
 }
 
 #options {
-    background: hsl(120, 100%, 70%);
-    border: 1px solid hsl(120, 100%, 40%);
+    background: #472a07;
+    border: 1px solid #472a07;
+    min-width: 400px;
+    align:center;
 }
 
 footer {
-    background: hsl(0, 100%, 70%);
-    border: 1px solid hsl(0, 100%, 50%);
+    background: #472a07;
+    border: 1px solid#472a07;
 }
 
 #footerbuttons {
     background: hsl(0, 100%, 70%);
-    border: 1px solid hsl(0, 100%, 50%);
+    border: 1px #472a07;
 }
 #footer {
   background: #E4B363;
-  border: 1px solid hsl(0, 100%, 50%);
+  border: 1px solid #472a07;
+  padding-top: 5px;
+  padding-bottom: 15px;
+  padding-left: 3px;
+  padding-right: 3px;
+  min-width: 350px;
 }
 
 footer > small {
@@ -81,6 +91,7 @@ h1 {
 
 #score {
     /* font-weight: bold; */
+    grid-area: board;
     font-weight: normal;
     display: inline;
 }
@@ -102,9 +113,9 @@ h3 {
     padding: 0.5em;
 }
 
-#highScores {
-    grid-area: score;
-    margin-bottom: 0.5em;
+#highScores
+  grid-area: board-start;
+  margin-bottom: 0.5em;
 }
 
 table {
@@ -132,7 +143,8 @@ td {
 }
 
 #options {
-    grid-area: opt;
+    /* grid-area: opt; */
+    grid-area: board-start;
     display: flex;
     flex-direction: column;
 }

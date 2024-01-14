@@ -147,6 +147,27 @@ nav a:focus {
   color: rgba(255,255,255,.4);
 }
 
+table {
+  background-color: #472a07;   /* desktop dark background before #2059b5;*/
+  border-width: medium;
+  /* border-color:  #E4B363; */
+  border: 1px solid #E4B363;
+}
+
+th {
+  background-color: #472a07;   /* desktop dark background before #2059b5;*/
+  color:#E4B363;
+  padding: 15px;
+  border-width: medium;
+}
+td {
+  background-color: #E4B363;   /* desktop dark background before #2059b5;*/
+  color: white;
+  padding: 15px;
+  border-width: medium;
+}
+
+
 /* flex styles */
 
 
@@ -229,25 +250,6 @@ nav {
       text-align: center;
 
       background-color: #E4B363;   /* desktop brown background before #2059b5;*/
-    }
-    table {
-      background-color: #472a07;   /* desktop dark background before #2059b5;*/
-      border-width: medium;
-      /* border-color:  #E4B363; */
-      border: 1px solid #E4B363;
-    }
-
-    th {
-      background-color: #472a07;   /* desktop dark background before #2059b5;*/
-      color:#E4B363;
-      padding: 15px;
-      border-width: medium;
-    }
-    td {
-      background-color: #E4B363;   /* desktop dark background before #2059b5;*/
-      color: white;
-      padding: 15px;
-      border-width: medium;
     }
 
   /*.site-nav a:hover,
