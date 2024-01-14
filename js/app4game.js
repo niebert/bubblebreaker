@@ -114,14 +114,15 @@ function initGame(options) {
                   alert('Game over.');
               }
               if (game.playerName) {
-                console.log("app4game.js:114 - Player name exists");
+                console.log("app4game.js:114 - Player name '"+game.playerName+"' exists");
               } else {
                 game.playerName = window.prompt("Please enter Player Name", "");
                 playerNameElement.value = game.playerName;
                 if (localStorageAvailable()) {
-                    localStorage.playerName = playerNameElement.value;
+                    localStorage.playerName = game.playerName;
                 }
               }
+              console.log("app4game.js:125 - consider Highscore "+game.score + "Name: '" + game.playerName+"'");
               highScores.consider(
                   {score: game.score, playerName: game.playerName}
               );
