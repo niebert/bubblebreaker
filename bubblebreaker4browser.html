@@ -1,0 +1,174 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel=icon href="img/ornament.svg" sizes="any" type="image/svg+xml">
+    <link rel="stylesheet" href="css/bubblebreaker.css">
+
+    <title>BubbleBreaker4JS - 1.0.22</title>
+    <!--
+    writedom.js import
+    show and hide options and highscore
+    use icons from icons4menu
+    load save config
+    -->
+    <script type="text/javascript">
+      function el(pID) {
+        return document.getElementById(pID);
+      }
+
+      function hide(pID) {
+        var vNode = el(pID);
+        if (vNode) {
+          vNode.style.display = "none";
+        } else {
+          console.error("DOM Node ["+pID+"] does not exist.");
+        }
+      }
+
+      function show(pID) {
+        var vNode = el(pID);
+        if (vNode) {
+          vNode.style.display = "";
+        } else {
+          console.error("DOM Node ["+pID+"] does not exist.");
+        }
+      }
+      function showNewGame4Menu(event) {
+          game.newGame();
+          app.nav.page('play');
+      }
+
+      function showPage4Game(pID) {
+        console.log("index.html:43 - showPage('"+pID+"')");
+        hide("board");
+        hide("options");
+        hide("highScores");
+        if (pID) {
+          show(pID);
+          if (pID !== "board") {
+            hide("button4new");
+          } else {
+            show("button4new");
+          }
+        }
+      }
+
+
+    </script>
+</head>
+
+<body>
+
+<section id='mainSection'>
+
+  <!-- div id="header" -->
+  <header id="header">
+      <h1 id='headingTitle'>
+          BubbleBreaker
+      </h1>
+      <h3>
+         Score: <span id='score'></span> &nbsp;
+         <span  id='score4selection'></span>
+         <button id="button4new">New</button>
+         <button id="button4board"      Xstyle="display:none">Board</button>
+         <button id="button4highScores">Highscore</button>
+         <button id="button4options">Options</button>
+      </h3>
+  </header>
+
+      <canvas id='board' width='432' height='432'>
+          Your browser does not support the HTML5 canvas tag.
+      </canvas>
+
+    <section id='highScores' style="display:none;width=100%">
+        <h3>High scores</h3>
+
+        <table width="100%">
+            <tr>
+                <th class='scoreColumn'>Score</th>
+                <th class='nameColumn'>Player name</th>
+            </tr>
+            <tr id='score0'><td></td><td id='name0'></td></tr>
+            <tr id='score1'><td></td><td id='name1'></td></tr>
+            <tr id='score2'><td></td><td id='name2'></td></tr>
+            <tr id='score3'><td></td><td id='name3'></td></tr>
+            <tr id='score4'><td></td><td id='name4'></td></tr>
+        </table>
+
+        <button id="button4clear" type="button" name="button">Clear Highscore</button>
+
+    </section>
+
+    <section id='options' style="display:none;width=100%">
+        <h3>Options</h3>
+        <button id='newGame' type='button' value='newGame'>
+            Start new game
+        </button>
+        <input id='playerName' type='text' name='playerName' maxlength='15'
+            placeholder='Player name'>
+        <label for='difficulty'>Difficulty:</label>
+        <select id='difficulty'>
+            <option value='4'>easy</option>
+            <option value='5'>normal</option>
+            <option value='6'>hard</option>
+        </select>
+    </section>
+      <footer  id="footer" style="width:100%">
+        <small id="footerbuttons">
+        &nbsp;  <a href="https://github.com/niebert/bubblebreaker" target="_blank">GitHub-Repository</a>
+        &nbsp;  <a href="bubblebreaker4menu.html" target="_blank">BubbleBreaker4Menu</a>
+        </small>
+
+    </footer>
+
+
+</section>
+
+<script src='js/bubblestorage.js'></script>
+<script src='js/bubblebreaker.js'></script>
+<script src='js/highscores.js'></script>
+<script src='js/app4game.js'></script>
+
+<script type="text/javascript">
+  var options = {
+    "boardMarginTop": el("header").offsetHeight,
+    "boardMarginBottom":  el("footer").offsetHeight
+  }
+   initGame(options);
+
+
+
+  document.getElementById('newGame').addEventListener('click',function (event) {
+      game.newGame();
+      showPage4Game('board');
+  });
+  document.getElementById('button4new').addEventListener('click',function (event) {
+      game.newGame();
+      showPage4Game('board');
+  });
+
+  document.getElementById('button4board').addEventListener('click',function (event) {
+    show('board');
+    show('button4new');
+    hide('highScores')
+    hide('options')
+  });
+  document.getElementById('button4options').addEventListener('click',function (event) {
+    hide('board');
+    show('button4new');
+    hide('highScores')
+    show('options')
+  });
+  document.getElementById('button4highScores').addEventListener('click',function (event) {
+    hide('board');
+    show('button4new');
+    show('highScores')
+    hide('options')
+  });
+
+</script>
+
+</body>
+
+</html>
