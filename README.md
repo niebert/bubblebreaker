@@ -1,7 +1,7 @@
 
 
 # BubbleBreaker4JS 
-### Version 1.0.18
+### Version 1.0.23
 
 Simple board game. 
 
