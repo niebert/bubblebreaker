@@ -5,9 +5,9 @@
 
 Simple board game. 
 
-### - [View Demo](https://niebert.github.io/bubblebreaker) 
+### - [View Demo - Desktop/Browser Version](https://niebert.github.io/bubblebreaker/bubblebreaker4browser.html) 
 
-### - [View Demo Hamburger Menu](https://niebert.github.io/bubblebreaker/bubblebreaker4menu.html) 
+### - [View Demo - Mobile Menu](https://niebert.github.io/bubblebreaker/bubblebreaker4menu.html) 
 
 This is fork of [bobak7/bubblebreaker](https://github.com/bobak7/bubblebreaker). This fork 
 * added a webview of the demo so that learners can view the webapp and then look into mathematical principles of rewards points and its encouraging drivers for the game.
